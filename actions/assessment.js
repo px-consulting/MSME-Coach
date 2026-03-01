@@ -110,3 +110,26 @@ export async function getLatestBusinessmaturityReport() {
         throw new Error("Failed to fetch your business maturity report");
     }
 }
+
+export async function getFullAssessmentData() {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+
+    const dbUser = await db.user.findUnique({
+        where: { authUserId: user.id },
+        include: { businessInsight: true },
+    });
+    if (!dbUser) throw new Error("User not found");
+
+    const assessment = await db.assessment.findFirst({
+        where: { userId: dbUser.id },
+        orderBy: { dateTaken: "desc" },
+    });
+
+    return {
+        user: { name: dbUser.name, email: dbUser.email },
+        businessInsight: dbUser.businessInsight,
+        assessment,
+    };
+}
