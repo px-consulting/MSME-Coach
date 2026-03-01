@@ -1234,11 +1234,13 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     assessments: number
+    fundingReadiness: number
     businessPlans: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assessments?: boolean | UserCountOutputTypeCountAssessmentsArgs
+    fundingReadiness?: boolean | UserCountOutputTypeCountFundingReadinessArgs
     businessPlans?: boolean | UserCountOutputTypeCountBusinessPlansArgs
   }
 
@@ -1258,6 +1260,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAssessmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AssessmentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFundingReadinessArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FundingReadinessWhereInput
   }
 
   /**
@@ -1505,7 +1514,7 @@ export namespace Prisma {
     objects: {
       businessInsight: Prisma.$BusinessInsightPayload<ExtArgs> | null
       assessments: Prisma.$AssessmentPayload<ExtArgs>[]
-      fundingReadiness: Prisma.$FundingReadinessPayload<ExtArgs> | null
+      fundingReadiness: Prisma.$FundingReadinessPayload<ExtArgs>[]
       businessPlans: Prisma.$BusinessPlanPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -1912,7 +1921,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     businessInsight<T extends User$businessInsightArgs<ExtArgs> = {}>(args?: Subset<T, User$businessInsightArgs<ExtArgs>>): Prisma__BusinessInsightClient<$Result.GetResult<Prisma.$BusinessInsightPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     assessments<T extends User$assessmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$assessmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    fundingReadiness<T extends User$fundingReadinessArgs<ExtArgs> = {}>(args?: Subset<T, User$fundingReadinessArgs<ExtArgs>>): Prisma__FundingReadinessClient<$Result.GetResult<Prisma.$FundingReadinessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    fundingReadiness<T extends User$fundingReadinessArgs<ExtArgs> = {}>(args?: Subset<T, User$fundingReadinessArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FundingReadinessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     businessPlans<T extends User$businessPlansArgs<ExtArgs> = {}>(args?: Subset<T, User$businessPlansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2397,6 +2406,11 @@ export namespace Prisma {
      */
     include?: FundingReadinessInclude<ExtArgs> | null
     where?: FundingReadinessWhereInput
+    orderBy?: FundingReadinessOrderByWithRelationInput | FundingReadinessOrderByWithRelationInput[]
+    cursor?: FundingReadinessWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FundingReadinessScalarFieldEnum | FundingReadinessScalarFieldEnum[]
   }
 
   /**
@@ -4783,6 +4797,7 @@ export namespace Prisma {
     userId: string | null
     score: number | null
     readinessLevel: string | null
+    report: string | null
     issuedAt: Date | null
   }
 
@@ -4791,6 +4806,7 @@ export namespace Prisma {
     userId: string | null
     score: number | null
     readinessLevel: string | null
+    report: string | null
     issuedAt: Date | null
   }
 
@@ -4798,8 +4814,9 @@ export namespace Prisma {
     id: number
     userId: number
     score: number
-    scoreDetails: number
+    answers: number
     readinessLevel: number
+    report: number
     issuedAt: number
     _all: number
   }
@@ -4818,6 +4835,7 @@ export namespace Prisma {
     userId?: true
     score?: true
     readinessLevel?: true
+    report?: true
     issuedAt?: true
   }
 
@@ -4826,6 +4844,7 @@ export namespace Prisma {
     userId?: true
     score?: true
     readinessLevel?: true
+    report?: true
     issuedAt?: true
   }
 
@@ -4833,8 +4852,9 @@ export namespace Prisma {
     id?: true
     userId?: true
     score?: true
-    scoreDetails?: true
+    answers?: true
     readinessLevel?: true
+    report?: true
     issuedAt?: true
     _all?: true
   }
@@ -4929,8 +4949,9 @@ export namespace Prisma {
     id: string
     userId: string
     score: number
-    scoreDetails: JsonValue
+    answers: JsonValue
     readinessLevel: string
+    report: string
     issuedAt: Date
     _count: FundingReadinessCountAggregateOutputType | null
     _avg: FundingReadinessAvgAggregateOutputType | null
@@ -4957,8 +4978,9 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     score?: boolean
-    scoreDetails?: boolean
+    answers?: boolean
     readinessLevel?: boolean
+    report?: boolean
     issuedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fundingReadiness"]>
@@ -4967,8 +4989,9 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     score?: boolean
-    scoreDetails?: boolean
+    answers?: boolean
     readinessLevel?: boolean
+    report?: boolean
     issuedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fundingReadiness"]>
@@ -4977,8 +5000,9 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     score?: boolean
-    scoreDetails?: boolean
+    answers?: boolean
     readinessLevel?: boolean
+    report?: boolean
     issuedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fundingReadiness"]>
@@ -4987,12 +5011,13 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     score?: boolean
-    scoreDetails?: boolean
+    answers?: boolean
     readinessLevel?: boolean
+    report?: boolean
     issuedAt?: boolean
   }
 
-  export type FundingReadinessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "score" | "scoreDetails" | "readinessLevel" | "issuedAt", ExtArgs["result"]["fundingReadiness"]>
+  export type FundingReadinessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "score" | "answers" | "readinessLevel" | "report" | "issuedAt", ExtArgs["result"]["fundingReadiness"]>
   export type FundingReadinessInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -5012,8 +5037,9 @@ export namespace Prisma {
       id: string
       userId: string
       score: number
-      scoreDetails: Prisma.JsonValue
+      answers: Prisma.JsonValue
       readinessLevel: string
+      report: string
       issuedAt: Date
     }, ExtArgs["result"]["fundingReadiness"]>
     composites: {}
@@ -5441,9 +5467,10 @@ export namespace Prisma {
   interface FundingReadinessFieldRefs {
     readonly id: FieldRef<"FundingReadiness", 'String'>
     readonly userId: FieldRef<"FundingReadiness", 'String'>
-    readonly score: FieldRef<"FundingReadiness", 'Int'>
-    readonly scoreDetails: FieldRef<"FundingReadiness", 'Json'>
+    readonly score: FieldRef<"FundingReadiness", 'Float'>
+    readonly answers: FieldRef<"FundingReadiness", 'Json'>
     readonly readinessLevel: FieldRef<"FundingReadiness", 'String'>
+    readonly report: FieldRef<"FundingReadiness", 'String'>
     readonly issuedAt: FieldRef<"FundingReadiness", 'DateTime'>
   }
     
@@ -6982,8 +7009,9 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     score: 'score',
-    scoreDetails: 'scoreDetails',
+    answers: 'answers',
     readinessLevel: 'readinessLevel',
+    report: 'report',
     issuedAt: 'issuedAt'
   };
 
@@ -7140,7 +7168,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     businessInsight?: XOR<BusinessInsightNullableScalarRelationFilter, BusinessInsightWhereInput> | null
     assessments?: AssessmentListRelationFilter
-    fundingReadiness?: XOR<FundingReadinessNullableScalarRelationFilter, FundingReadinessWhereInput> | null
+    fundingReadiness?: FundingReadinessListRelationFilter
     businessPlans?: BusinessPlanListRelationFilter
   }
 
@@ -7154,7 +7182,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     businessInsight?: BusinessInsightOrderByWithRelationInput
     assessments?: AssessmentOrderByRelationAggregateInput
-    fundingReadiness?: FundingReadinessOrderByWithRelationInput
+    fundingReadiness?: FundingReadinessOrderByRelationAggregateInput
     businessPlans?: BusinessPlanOrderByRelationAggregateInput
   }
 
@@ -7171,7 +7199,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     businessInsight?: XOR<BusinessInsightNullableScalarRelationFilter, BusinessInsightWhereInput> | null
     assessments?: AssessmentListRelationFilter
-    fundingReadiness?: XOR<FundingReadinessNullableScalarRelationFilter, FundingReadinessWhereInput> | null
+    fundingReadiness?: FundingReadinessListRelationFilter
     businessPlans?: BusinessPlanListRelationFilter
   }, "id" | "authUserId" | "email">
 
@@ -7381,9 +7409,10 @@ export namespace Prisma {
     NOT?: FundingReadinessWhereInput | FundingReadinessWhereInput[]
     id?: StringFilter<"FundingReadiness"> | string
     userId?: StringFilter<"FundingReadiness"> | string
-    score?: IntFilter<"FundingReadiness"> | number
-    scoreDetails?: JsonFilter<"FundingReadiness">
+    score?: FloatFilter<"FundingReadiness"> | number
+    answers?: JsonFilter<"FundingReadiness">
     readinessLevel?: StringFilter<"FundingReadiness"> | string
+    report?: StringFilter<"FundingReadiness"> | string
     issuedAt?: DateTimeFilter<"FundingReadiness"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -7392,31 +7421,34 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     score?: SortOrder
-    scoreDetails?: SortOrder
+    answers?: SortOrder
     readinessLevel?: SortOrder
+    report?: SortOrder
     issuedAt?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
   export type FundingReadinessWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    userId?: string
     AND?: FundingReadinessWhereInput | FundingReadinessWhereInput[]
     OR?: FundingReadinessWhereInput[]
     NOT?: FundingReadinessWhereInput | FundingReadinessWhereInput[]
-    score?: IntFilter<"FundingReadiness"> | number
-    scoreDetails?: JsonFilter<"FundingReadiness">
+    userId?: StringFilter<"FundingReadiness"> | string
+    score?: FloatFilter<"FundingReadiness"> | number
+    answers?: JsonFilter<"FundingReadiness">
     readinessLevel?: StringFilter<"FundingReadiness"> | string
+    report?: StringFilter<"FundingReadiness"> | string
     issuedAt?: DateTimeFilter<"FundingReadiness"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "userId">
+  }, "id">
 
   export type FundingReadinessOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
     score?: SortOrder
-    scoreDetails?: SortOrder
+    answers?: SortOrder
     readinessLevel?: SortOrder
+    report?: SortOrder
     issuedAt?: SortOrder
     _count?: FundingReadinessCountOrderByAggregateInput
     _avg?: FundingReadinessAvgOrderByAggregateInput
@@ -7431,9 +7463,10 @@ export namespace Prisma {
     NOT?: FundingReadinessScalarWhereWithAggregatesInput | FundingReadinessScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"FundingReadiness"> | string
     userId?: StringWithAggregatesFilter<"FundingReadiness"> | string
-    score?: IntWithAggregatesFilter<"FundingReadiness"> | number
-    scoreDetails?: JsonWithAggregatesFilter<"FundingReadiness">
+    score?: FloatWithAggregatesFilter<"FundingReadiness"> | number
+    answers?: JsonWithAggregatesFilter<"FundingReadiness">
     readinessLevel?: StringWithAggregatesFilter<"FundingReadiness"> | string
+    report?: StringWithAggregatesFilter<"FundingReadiness"> | string
     issuedAt?: DateTimeWithAggregatesFilter<"FundingReadiness"> | Date | string
   }
 
@@ -7502,7 +7535,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     businessInsight?: BusinessInsightCreateNestedOneWithoutUserInput
     assessments?: AssessmentCreateNestedManyWithoutUserInput
-    fundingReadiness?: FundingReadinessCreateNestedOneWithoutUserInput
+    fundingReadiness?: FundingReadinessCreateNestedManyWithoutUserInput
     businessPlans?: BusinessPlanCreateNestedManyWithoutUserInput
   }
 
@@ -7516,7 +7549,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     businessInsight?: BusinessInsightUncheckedCreateNestedOneWithoutUserInput
     assessments?: AssessmentUncheckedCreateNestedManyWithoutUserInput
-    fundingReadiness?: FundingReadinessUncheckedCreateNestedOneWithoutUserInput
+    fundingReadiness?: FundingReadinessUncheckedCreateNestedManyWithoutUserInput
     businessPlans?: BusinessPlanUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7530,7 +7563,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     businessInsight?: BusinessInsightUpdateOneWithoutUserNestedInput
     assessments?: AssessmentUpdateManyWithoutUserNestedInput
-    fundingReadiness?: FundingReadinessUpdateOneWithoutUserNestedInput
+    fundingReadiness?: FundingReadinessUpdateManyWithoutUserNestedInput
     businessPlans?: BusinessPlanUpdateManyWithoutUserNestedInput
   }
 
@@ -7544,7 +7577,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     businessInsight?: BusinessInsightUncheckedUpdateOneWithoutUserNestedInput
     assessments?: AssessmentUncheckedUpdateManyWithoutUserNestedInput
-    fundingReadiness?: FundingReadinessUncheckedUpdateOneWithoutUserNestedInput
+    fundingReadiness?: FundingReadinessUncheckedUpdateManyWithoutUserNestedInput
     businessPlans?: BusinessPlanUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -7775,8 +7808,9 @@ export namespace Prisma {
   export type FundingReadinessCreateInput = {
     id?: string
     score: number
-    scoreDetails: JsonNullValueInput | InputJsonValue
+    answers: JsonNullValueInput | InputJsonValue
     readinessLevel: string
+    report: string
     issuedAt?: Date | string
     user: UserCreateNestedOneWithoutFundingReadinessInput
   }
@@ -7785,16 +7819,18 @@ export namespace Prisma {
     id?: string
     userId: string
     score: number
-    scoreDetails: JsonNullValueInput | InputJsonValue
+    answers: JsonNullValueInput | InputJsonValue
     readinessLevel: string
+    report: string
     issuedAt?: Date | string
   }
 
   export type FundingReadinessUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    scoreDetails?: JsonNullValueInput | InputJsonValue
+    score?: FloatFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
     readinessLevel?: StringFieldUpdateOperationsInput | string
+    report?: StringFieldUpdateOperationsInput | string
     issuedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutFundingReadinessNestedInput
   }
@@ -7802,9 +7838,10 @@ export namespace Prisma {
   export type FundingReadinessUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    scoreDetails?: JsonNullValueInput | InputJsonValue
+    score?: FloatFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
     readinessLevel?: StringFieldUpdateOperationsInput | string
+    report?: StringFieldUpdateOperationsInput | string
     issuedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7812,25 +7849,28 @@ export namespace Prisma {
     id?: string
     userId: string
     score: number
-    scoreDetails: JsonNullValueInput | InputJsonValue
+    answers: JsonNullValueInput | InputJsonValue
     readinessLevel: string
+    report: string
     issuedAt?: Date | string
   }
 
   export type FundingReadinessUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    scoreDetails?: JsonNullValueInput | InputJsonValue
+    score?: FloatFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
     readinessLevel?: StringFieldUpdateOperationsInput | string
+    report?: StringFieldUpdateOperationsInput | string
     issuedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FundingReadinessUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    scoreDetails?: JsonNullValueInput | InputJsonValue
+    score?: FloatFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
     readinessLevel?: StringFieldUpdateOperationsInput | string
+    report?: StringFieldUpdateOperationsInput | string
     issuedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7941,9 +7981,10 @@ export namespace Prisma {
     none?: AssessmentWhereInput
   }
 
-  export type FundingReadinessNullableScalarRelationFilter = {
-    is?: FundingReadinessWhereInput | null
-    isNot?: FundingReadinessWhereInput | null
+  export type FundingReadinessListRelationFilter = {
+    every?: FundingReadinessWhereInput
+    some?: FundingReadinessWhereInput
+    none?: FundingReadinessWhereInput
   }
 
   export type BusinessPlanListRelationFilter = {
@@ -7958,6 +7999,10 @@ export namespace Prisma {
   }
 
   export type AssessmentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FundingReadinessOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8302,8 +8347,9 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     score?: SortOrder
-    scoreDetails?: SortOrder
+    answers?: SortOrder
     readinessLevel?: SortOrder
+    report?: SortOrder
     issuedAt?: SortOrder
   }
 
@@ -8316,6 +8362,7 @@ export namespace Prisma {
     userId?: SortOrder
     score?: SortOrder
     readinessLevel?: SortOrder
+    report?: SortOrder
     issuedAt?: SortOrder
   }
 
@@ -8324,6 +8371,7 @@ export namespace Prisma {
     userId?: SortOrder
     score?: SortOrder
     readinessLevel?: SortOrder
+    report?: SortOrder
     issuedAt?: SortOrder
   }
 
@@ -8368,10 +8416,11 @@ export namespace Prisma {
     connect?: AssessmentWhereUniqueInput | AssessmentWhereUniqueInput[]
   }
 
-  export type FundingReadinessCreateNestedOneWithoutUserInput = {
-    create?: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput>
-    connectOrCreate?: FundingReadinessCreateOrConnectWithoutUserInput
-    connect?: FundingReadinessWhereUniqueInput
+  export type FundingReadinessCreateNestedManyWithoutUserInput = {
+    create?: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput> | FundingReadinessCreateWithoutUserInput[] | FundingReadinessUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FundingReadinessCreateOrConnectWithoutUserInput | FundingReadinessCreateOrConnectWithoutUserInput[]
+    createMany?: FundingReadinessCreateManyUserInputEnvelope
+    connect?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
   }
 
   export type BusinessPlanCreateNestedManyWithoutUserInput = {
@@ -8394,10 +8443,11 @@ export namespace Prisma {
     connect?: AssessmentWhereUniqueInput | AssessmentWhereUniqueInput[]
   }
 
-  export type FundingReadinessUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput>
-    connectOrCreate?: FundingReadinessCreateOrConnectWithoutUserInput
-    connect?: FundingReadinessWhereUniqueInput
+  export type FundingReadinessUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput> | FundingReadinessCreateWithoutUserInput[] | FundingReadinessUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FundingReadinessCreateOrConnectWithoutUserInput | FundingReadinessCreateOrConnectWithoutUserInput[]
+    createMany?: FundingReadinessCreateManyUserInputEnvelope
+    connect?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
   }
 
   export type BusinessPlanUncheckedCreateNestedManyWithoutUserInput = {
@@ -8443,14 +8493,18 @@ export namespace Prisma {
     deleteMany?: AssessmentScalarWhereInput | AssessmentScalarWhereInput[]
   }
 
-  export type FundingReadinessUpdateOneWithoutUserNestedInput = {
-    create?: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput>
-    connectOrCreate?: FundingReadinessCreateOrConnectWithoutUserInput
-    upsert?: FundingReadinessUpsertWithoutUserInput
-    disconnect?: FundingReadinessWhereInput | boolean
-    delete?: FundingReadinessWhereInput | boolean
-    connect?: FundingReadinessWhereUniqueInput
-    update?: XOR<XOR<FundingReadinessUpdateToOneWithWhereWithoutUserInput, FundingReadinessUpdateWithoutUserInput>, FundingReadinessUncheckedUpdateWithoutUserInput>
+  export type FundingReadinessUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput> | FundingReadinessCreateWithoutUserInput[] | FundingReadinessUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FundingReadinessCreateOrConnectWithoutUserInput | FundingReadinessCreateOrConnectWithoutUserInput[]
+    upsert?: FundingReadinessUpsertWithWhereUniqueWithoutUserInput | FundingReadinessUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FundingReadinessCreateManyUserInputEnvelope
+    set?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
+    disconnect?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
+    delete?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
+    connect?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
+    update?: FundingReadinessUpdateWithWhereUniqueWithoutUserInput | FundingReadinessUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FundingReadinessUpdateManyWithWhereWithoutUserInput | FundingReadinessUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FundingReadinessScalarWhereInput | FundingReadinessScalarWhereInput[]
   }
 
   export type BusinessPlanUpdateManyWithoutUserNestedInput = {
@@ -8491,14 +8545,18 @@ export namespace Prisma {
     deleteMany?: AssessmentScalarWhereInput | AssessmentScalarWhereInput[]
   }
 
-  export type FundingReadinessUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput>
-    connectOrCreate?: FundingReadinessCreateOrConnectWithoutUserInput
-    upsert?: FundingReadinessUpsertWithoutUserInput
-    disconnect?: FundingReadinessWhereInput | boolean
-    delete?: FundingReadinessWhereInput | boolean
-    connect?: FundingReadinessWhereUniqueInput
-    update?: XOR<XOR<FundingReadinessUpdateToOneWithWhereWithoutUserInput, FundingReadinessUpdateWithoutUserInput>, FundingReadinessUncheckedUpdateWithoutUserInput>
+  export type FundingReadinessUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput> | FundingReadinessCreateWithoutUserInput[] | FundingReadinessUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FundingReadinessCreateOrConnectWithoutUserInput | FundingReadinessCreateOrConnectWithoutUserInput[]
+    upsert?: FundingReadinessUpsertWithWhereUniqueWithoutUserInput | FundingReadinessUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FundingReadinessCreateManyUserInputEnvelope
+    set?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
+    disconnect?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
+    delete?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
+    connect?: FundingReadinessWhereUniqueInput | FundingReadinessWhereUniqueInput[]
+    update?: FundingReadinessUpdateWithWhereUniqueWithoutUserInput | FundingReadinessUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FundingReadinessUpdateManyWithWhereWithoutUserInput | FundingReadinessUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FundingReadinessScalarWhereInput | FundingReadinessScalarWhereInput[]
   }
 
   export type BusinessPlanUncheckedUpdateManyWithoutUserNestedInput = {
@@ -8873,22 +8931,29 @@ export namespace Prisma {
   export type FundingReadinessCreateWithoutUserInput = {
     id?: string
     score: number
-    scoreDetails: JsonNullValueInput | InputJsonValue
+    answers: JsonNullValueInput | InputJsonValue
     readinessLevel: string
+    report: string
     issuedAt?: Date | string
   }
 
   export type FundingReadinessUncheckedCreateWithoutUserInput = {
     id?: string
     score: number
-    scoreDetails: JsonNullValueInput | InputJsonValue
+    answers: JsonNullValueInput | InputJsonValue
     readinessLevel: string
+    report: string
     issuedAt?: Date | string
   }
 
   export type FundingReadinessCreateOrConnectWithoutUserInput = {
     where: FundingReadinessWhereUniqueInput
     create: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput>
+  }
+
+  export type FundingReadinessCreateManyUserInputEnvelope = {
+    data: FundingReadinessCreateManyUserInput | FundingReadinessCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type BusinessPlanCreateWithoutUserInput = {
@@ -8989,31 +9054,33 @@ export namespace Prisma {
     dateTaken?: DateTimeFilter<"Assessment"> | Date | string
   }
 
-  export type FundingReadinessUpsertWithoutUserInput = {
+  export type FundingReadinessUpsertWithWhereUniqueWithoutUserInput = {
+    where: FundingReadinessWhereUniqueInput
     update: XOR<FundingReadinessUpdateWithoutUserInput, FundingReadinessUncheckedUpdateWithoutUserInput>
     create: XOR<FundingReadinessCreateWithoutUserInput, FundingReadinessUncheckedCreateWithoutUserInput>
-    where?: FundingReadinessWhereInput
   }
 
-  export type FundingReadinessUpdateToOneWithWhereWithoutUserInput = {
-    where?: FundingReadinessWhereInput
+  export type FundingReadinessUpdateWithWhereUniqueWithoutUserInput = {
+    where: FundingReadinessWhereUniqueInput
     data: XOR<FundingReadinessUpdateWithoutUserInput, FundingReadinessUncheckedUpdateWithoutUserInput>
   }
 
-  export type FundingReadinessUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    scoreDetails?: JsonNullValueInput | InputJsonValue
-    readinessLevel?: StringFieldUpdateOperationsInput | string
-    issuedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type FundingReadinessUpdateManyWithWhereWithoutUserInput = {
+    where: FundingReadinessScalarWhereInput
+    data: XOR<FundingReadinessUpdateManyMutationInput, FundingReadinessUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type FundingReadinessUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    scoreDetails?: JsonNullValueInput | InputJsonValue
-    readinessLevel?: StringFieldUpdateOperationsInput | string
-    issuedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type FundingReadinessScalarWhereInput = {
+    AND?: FundingReadinessScalarWhereInput | FundingReadinessScalarWhereInput[]
+    OR?: FundingReadinessScalarWhereInput[]
+    NOT?: FundingReadinessScalarWhereInput | FundingReadinessScalarWhereInput[]
+    id?: StringFilter<"FundingReadiness"> | string
+    userId?: StringFilter<"FundingReadiness"> | string
+    score?: FloatFilter<"FundingReadiness"> | number
+    answers?: JsonFilter<"FundingReadiness">
+    readinessLevel?: StringFilter<"FundingReadiness"> | string
+    report?: StringFilter<"FundingReadiness"> | string
+    issuedAt?: DateTimeFilter<"FundingReadiness"> | Date | string
   }
 
   export type BusinessPlanUpsertWithWhereUniqueWithoutUserInput = {
@@ -9052,7 +9119,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     assessments?: AssessmentCreateNestedManyWithoutUserInput
-    fundingReadiness?: FundingReadinessCreateNestedOneWithoutUserInput
+    fundingReadiness?: FundingReadinessCreateNestedManyWithoutUserInput
     businessPlans?: BusinessPlanCreateNestedManyWithoutUserInput
   }
 
@@ -9065,7 +9132,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     assessments?: AssessmentUncheckedCreateNestedManyWithoutUserInput
-    fundingReadiness?: FundingReadinessUncheckedCreateNestedOneWithoutUserInput
+    fundingReadiness?: FundingReadinessUncheckedCreateNestedManyWithoutUserInput
     businessPlans?: BusinessPlanUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -9094,7 +9161,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assessments?: AssessmentUpdateManyWithoutUserNestedInput
-    fundingReadiness?: FundingReadinessUpdateOneWithoutUserNestedInput
+    fundingReadiness?: FundingReadinessUpdateManyWithoutUserNestedInput
     businessPlans?: BusinessPlanUpdateManyWithoutUserNestedInput
   }
 
@@ -9107,7 +9174,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assessments?: AssessmentUncheckedUpdateManyWithoutUserNestedInput
-    fundingReadiness?: FundingReadinessUncheckedUpdateOneWithoutUserNestedInput
+    fundingReadiness?: FundingReadinessUncheckedUpdateManyWithoutUserNestedInput
     businessPlans?: BusinessPlanUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -9120,7 +9187,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     businessInsight?: BusinessInsightCreateNestedOneWithoutUserInput
-    fundingReadiness?: FundingReadinessCreateNestedOneWithoutUserInput
+    fundingReadiness?: FundingReadinessCreateNestedManyWithoutUserInput
     businessPlans?: BusinessPlanCreateNestedManyWithoutUserInput
   }
 
@@ -9133,7 +9200,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     businessInsight?: BusinessInsightUncheckedCreateNestedOneWithoutUserInput
-    fundingReadiness?: FundingReadinessUncheckedCreateNestedOneWithoutUserInput
+    fundingReadiness?: FundingReadinessUncheckedCreateNestedManyWithoutUserInput
     businessPlans?: BusinessPlanUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -9162,7 +9229,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     businessInsight?: BusinessInsightUpdateOneWithoutUserNestedInput
-    fundingReadiness?: FundingReadinessUpdateOneWithoutUserNestedInput
+    fundingReadiness?: FundingReadinessUpdateManyWithoutUserNestedInput
     businessPlans?: BusinessPlanUpdateManyWithoutUserNestedInput
   }
 
@@ -9175,7 +9242,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     businessInsight?: BusinessInsightUncheckedUpdateOneWithoutUserNestedInput
-    fundingReadiness?: FundingReadinessUncheckedUpdateOneWithoutUserNestedInput
+    fundingReadiness?: FundingReadinessUncheckedUpdateManyWithoutUserNestedInput
     businessPlans?: BusinessPlanUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -9257,7 +9324,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     businessInsight?: BusinessInsightCreateNestedOneWithoutUserInput
     assessments?: AssessmentCreateNestedManyWithoutUserInput
-    fundingReadiness?: FundingReadinessCreateNestedOneWithoutUserInput
+    fundingReadiness?: FundingReadinessCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBusinessPlansInput = {
@@ -9270,7 +9337,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     businessInsight?: BusinessInsightUncheckedCreateNestedOneWithoutUserInput
     assessments?: AssessmentUncheckedCreateNestedManyWithoutUserInput
-    fundingReadiness?: FundingReadinessUncheckedCreateNestedOneWithoutUserInput
+    fundingReadiness?: FundingReadinessUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBusinessPlansInput = {
@@ -9299,7 +9366,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     businessInsight?: BusinessInsightUpdateOneWithoutUserNestedInput
     assessments?: AssessmentUpdateManyWithoutUserNestedInput
-    fundingReadiness?: FundingReadinessUpdateOneWithoutUserNestedInput
+    fundingReadiness?: FundingReadinessUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBusinessPlansInput = {
@@ -9312,7 +9379,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     businessInsight?: BusinessInsightUncheckedUpdateOneWithoutUserNestedInput
     assessments?: AssessmentUncheckedUpdateManyWithoutUserNestedInput
-    fundingReadiness?: FundingReadinessUncheckedUpdateOneWithoutUserNestedInput
+    fundingReadiness?: FundingReadinessUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AssessmentCreateManyUserInput = {
@@ -9322,6 +9389,15 @@ export namespace Prisma {
     maturityLevel: string
     report: string
     dateTaken?: Date | string
+  }
+
+  export type FundingReadinessCreateManyUserInput = {
+    id?: string
+    score: number
+    answers: JsonNullValueInput | InputJsonValue
+    readinessLevel: string
+    report: string
+    issuedAt?: Date | string
   }
 
   export type BusinessPlanCreateManyUserInput = {
@@ -9356,6 +9432,33 @@ export namespace Prisma {
     maturityLevel?: StringFieldUpdateOperationsInput | string
     report?: StringFieldUpdateOperationsInput | string
     dateTaken?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FundingReadinessUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
+    readinessLevel?: StringFieldUpdateOperationsInput | string
+    report?: StringFieldUpdateOperationsInput | string
+    issuedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FundingReadinessUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
+    readinessLevel?: StringFieldUpdateOperationsInput | string
+    report?: StringFieldUpdateOperationsInput | string
+    issuedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FundingReadinessUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: FloatFieldUpdateOperationsInput | number
+    answers?: JsonNullValueInput | InputJsonValue
+    readinessLevel?: StringFieldUpdateOperationsInput | string
+    report?: StringFieldUpdateOperationsInput | string
+    issuedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BusinessPlanUpdateWithoutUserInput = {

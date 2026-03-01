@@ -1,5 +1,5 @@
 import { getUserOnboardingStatus } from '@/actions/user';
-import { getLatestBusinessmaturityReport } from '@/actions/assessment';
+import { getLatestBusinessmaturityReport, getLatestFundingReadinessReport } from '@/actions/assessment';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -30,13 +30,24 @@ const assessmentTools = [
     ],
   },
   {
-    icon: <DollarSign className="h-6 w-6 text-violet-400" />,
+    icon: <DollarSign className="h-6 w-6 text-emerald-400" />,
     title: 'Funding Readiness Check',
     description:
-      "Assess your business's readiness for external funding and discover what investors look for before writing a cheque.",
-    href: '#',
-    isLive: false,
-    sections: [],
+      "Assess your business's readiness for external funding across 10 investor dimensions and get an AI-powered funding report.",
+    href: '/assessment/funding-readiness',
+    isLive: true,
+    sections: [
+      'Legal & Compliance',
+      'Business Plan',
+      'Financial Health',
+      'Audited Financials',
+      'Funding Purpose',
+      'Debt-to-Equity Ratio',
+      'CAC & LTV Metrics',
+      'Scalability',
+      'Exit Plan',
+      'ROI Timeline',
+    ],
   },
   {
     icon: <NotepadText className="h-6 w-6 text-violet-400" />,
@@ -56,9 +67,9 @@ const Assessment = async () => {
   }
 
   let latestAssessment = null;
-  try {
-    latestAssessment = await getLatestBusinessmaturityReport();
-  } catch (_) {}
+  let latestFunding = null;
+  try { latestAssessment = await getLatestBusinessmaturityReport(); } catch (_) {}
+  try { latestFunding = await getLatestFundingReadinessReport(); } catch (_) {}
 
   return (
     <div className="space-y-10">
@@ -76,46 +87,59 @@ const Assessment = async () => {
         </p>
       </div>
 
-      {/* Previous result banner */}
-      {latestAssessment && (
-        <div
-          className="rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-          style={{
-            background: '#13101e',
-            border: '1px solid rgba(139,92,246,0.25)',
-          }}
-        >
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-lg bg-violet-500/15 flex items-center justify-center flex-shrink-0">
-              <Trophy className="h-5 w-5 text-violet-400" />
+      {/* Previous result banners */}
+      <div className="space-y-3">
+        {latestAssessment && (
+          <div className="rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+            style={{ background: '#13101e', border: '1px solid rgba(139,92,246,0.25)' }}>
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-lg bg-violet-500/15 flex items-center justify-center flex-shrink-0">
+                <Trophy className="h-5 w-5 text-violet-400" />
+              </div>
+              <div>
+                <p className="text-white font-semibold">
+                  360° Maturity: <span className="text-violet-400">{latestAssessment.maturityLevel}</span>
+                </p>
+                <p className="text-white/40 text-sm flex items-center gap-1.5 mt-0.5">
+                  <Calendar className="h-3.5 w-3.5" />
+                  {new Date(latestAssessment.dateTaken).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  &nbsp;·&nbsp; Score: {latestAssessment.score}%
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-white font-semibold">
-                Last Result:{' '}
-                <span className="text-violet-400">
-                  {latestAssessment.maturityLevel}
-                </span>
-              </p>
-              <p className="text-white/40 text-sm flex items-center gap-1.5 mt-0.5">
-                <Calendar className="h-3.5 w-3.5" />
-                {new Date(latestAssessment.dateTaken).toLocaleDateString(
-                  'en-IN',
-                  { day: 'numeric', month: 'long', year: 'numeric' }
-                )}
-                &nbsp;·&nbsp; Score: {latestAssessment.score}%
-              </p>
-            </div>
+            <Link href="/assessment/result">
+              <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white border-0 cursor-pointer gap-2 whitespace-nowrap">
+                View Report <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
           </div>
-          <Link href="/assessment/result">
-            <Button
-              size="sm"
-              className="bg-violet-600 hover:bg-violet-700 text-white border-0 cursor-pointer gap-2 whitespace-nowrap"
-            >
-              View Report <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
-      )}
+        )}
+        {latestFunding && (
+          <div className="rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+            style={{ background: '#0a1a12', border: '1px solid rgba(16,185,129,0.25)' }}>
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-lg bg-emerald-500/15 flex items-center justify-center flex-shrink-0">
+                <DollarSign className="h-5 w-5 text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-white font-semibold">
+                  Funding Readiness: <span className="text-emerald-400">{latestFunding.readinessLevel}</span>
+                </p>
+                <p className="text-white/40 text-sm flex items-center gap-1.5 mt-0.5">
+                  <Calendar className="h-3.5 w-3.5" />
+                  {new Date(latestFunding.issuedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  &nbsp;·&nbsp; Score: {Math.round(latestFunding.score)}%
+                </p>
+              </div>
+            </div>
+            <Link href="/assessment/funding-readiness/result">
+              <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white border-0 cursor-pointer gap-2 whitespace-nowrap">
+                View Report <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        )}
+      </div>
 
       {/* Assessment cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -166,8 +190,8 @@ const Assessment = async () => {
             <div>
               {tool.isLive ? (
                 <Link href={tool.href} className="block">
-                  <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white border-0 cursor-pointer gap-2">
-                    {latestAssessment && index === 0
+                  <Button className={`w-full text-white border-0 cursor-pointer gap-2 ${index === 1 ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-violet-600 hover:bg-violet-700'}`}>
+                    {(index === 0 && latestAssessment) || (index === 1 && latestFunding)
                       ? 'Retake Assessment'
                       : 'Start Assessment'}
                     <ArrowRight className="h-4 w-4" />

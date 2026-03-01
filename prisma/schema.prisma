@@ -28,7 +28,7 @@ model User {
 
   businessInsight  BusinessInsight?
   assessments       Assessment[]
-  fundingReadiness  FundingReadiness?
+  fundingReadiness  FundingReadiness[]
   businessPlans     BusinessPlan[]
 }
 
@@ -66,13 +66,14 @@ model Assessment {
 
 // Funding Readiness
 model FundingReadiness {
-  id              String @id @default(uuid())
-  userId          String @unique
-  user            User   @relation(fields: [userId], references: [id])
-  score           Int
-  scoreDetails    Json
-  readinessLevel  String // Ready, Near-Ready, Moderate, Not Ready
-  issuedAt        DateTime @default(now())
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  score          Float
+  answers        Json
+  readinessLevel String
+  report         String
+  issuedAt       DateTime @default(now())
 }
 
 // Business Plan Generator
