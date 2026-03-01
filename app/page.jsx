@@ -1,119 +1,202 @@
 import HeroSection from "@/components/hero";
 import { featuresData, howItWorksData, statsData, testimonialsData } from "@/data/landing";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
-
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ArrowRight, Quote } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="mt-30 md:mt-40">
+    <div
+      className="min-h-screen"
+      style={{ background: '#0A0A0F', color: '#F0F0FF' }}
+    >
+      {/* Spacer for fixed header */}
+      <div className="h-16" />
 
+      {/* Hero */}
       <HeroSection />
 
-      <section className="py-20 bg-blue-50">
-        <div className="container mx-auto px-4">
+      {/* Stats */}
+      <section className="py-20 border-y linear-grid-bg" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+        <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {statsData.map((statsData, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">{statsData.value}</div>
-                <div className="text-gray-600">{statsData.label}</div>
+            {statsData.map((stat, index) => (
+              <div key={index} className="text-center group">
+                <div className="text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-b from-white to-white/60 text-transparent bg-clip-text mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-white/40 text-sm">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Everything you need to grow your business</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Features */}
+      <section className="py-24 px-6">
+        <div className="container mx-auto">
+          {/* Section header */}
+          <div className="text-center mb-16 space-y-4">
+            <p className="text-violet-400 text-sm font-medium tracking-widest uppercase">Platform</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+              Everything you need to grow your business
+            </h2>
+            <p className="text-white/40 max-w-xl mx-auto">
+              A complete toolkit for MSME growth — from diagnostics to expert guidance.
+            </p>
+          </div>
+
+          {/* Feature grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {featuresData.map((feature, index) => (
-              <Card key={index} className="py-6">
-                <CardContent className="space-y-4 pt-4">
-                  {feature.icon}
-                  <h3 className="text-xl font-semibold">{feature.title}</h3>
-                  {!feature.isLive && (
-                     <p className="gradient-title">Coming Soon</p>
-                  )}
-                  <p className="text-gray-600">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-blue-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {howItWorksData.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">{step.icon}</div>
-                <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+              <div
+                key={index}
+                className="gradient-border-card rounded-xl p-6 space-y-4"
+              >
+                <div className="w-10 h-10 rounded-lg bg-violet-500/15 flex items-center justify-center">
+                  <span className="[&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-violet-400">
+                    {feature.icon}
+                  </span>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-white font-semibold">{feature.title}</h3>
+                    {!feature.isLive && (
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-400 border border-violet-500/20">
+                        Soon
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-white/40 text-sm leading-relaxed">{feature.description}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="testimonials" className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">
-            What Our Users Say
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonialsData.map((testimonial, index) => (
-              <Card key={index} className="p-6">
-                <CardContent className="pt-4">
-                  <div className="flex items-center mb-4">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
-                    <div className="ml-4">
-                      <div className="font-semibold">{testimonial.name}</div>
-                      <div className="text-sm text-gray-600">
-                        {testimonial.role}
-                      </div>
-                    </div>
+      {/* How It Works */}
+      <section className="py-24 px-6 linear-grid-bg" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="container mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <p className="text-violet-400 text-sm font-medium tracking-widest uppercase">Process</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+              How It Works
+            </h2>
+            <p className="text-white/40 max-w-xl mx-auto">
+              Get from sign-up to actionable insights in four simple steps.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {howItWorksData.map((step, index) => (
+              <div key={index} className="relative">
+                {/* Connector line */}
+                {index < howItWorksData.length - 1 && (
+                  <div className="hidden lg:block absolute top-5 left-[calc(50%+28px)] right-0 h-px bg-gradient-to-r from-violet-500/30 to-transparent" />
+                )}
+                <div className="gradient-border-card rounded-xl p-6 space-y-4">
+                  <div className="w-10 h-10 rounded-full bg-violet-500/15 border border-violet-500/25 flex items-center justify-center">
+                    <span className="text-violet-400 font-bold text-sm">{index + 1}</span>
                   </div>
-                  <p className="text-gray-600">{testimonial.quote}</p>
-                </CardContent>
-              </Card>
+                  <div>
+                    <h3 className="text-white font-semibold mb-2">{step.title.replace(/^\d+\.\s/, '')}</h3>
+                    <p className="text-white/40 text-sm leading-relaxed">{step.description}</p>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20 gradient">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Supercharge Your Business?
-          </h2>
-          <p className="text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of users who are already scaling their business with Msme Coach
-          </p>
-          <Link href="/dashboard">
-            <Button
-              size="lg"
-              className="bg-white text-blue-600 hover:bg-blue-50 animate-bounce cursor-pointer"
-            >
-              Start Your Journey Now!
-            </Button>
-          </Link>
+      {/* Testimonials */}
+      <section className="py-24 px-6">
+        <div className="container mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <p className="text-violet-400 text-sm font-medium tracking-widest uppercase">Testimonials</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+              What our users say
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonialsData.map((testimonial, index) => (
+              <div key={index} className="gradient-border-card rounded-xl p-6 space-y-5">
+                <Quote className="h-5 w-5 text-violet-500/60" />
+                <p className="text-white/60 text-sm leading-relaxed italic">
+                  "{testimonial.quote}"
+                </p>
+                <div className="flex items-center gap-3 pt-2 border-t border-white/[0.06]">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    width={36}
+                    height={36}
+                    className="rounded-full"
+                  />
+                  <div>
+                    <div className="text-white font-medium text-sm">{testimonial.name}</div>
+                    <div className="text-white/40 text-xs">{testimonial.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
+      {/* CTA */}
+      <section className="py-24 px-6">
+        <div className="container mx-auto">
+          <div
+            className="rounded-2xl p-12 md:p-20 text-center relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, #1a0a2e 0%, #0d0d1f 50%, #0a1628 100%)',
+              border: '1px solid rgba(139,92,246,0.2)',
+              boxShadow: '0 0 80px rgba(139,92,246,0.12), inset 0 1px 0 rgba(255,255,255,0.05)',
+            }}
+          >
+            {/* Background glow */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.25) 0%, transparent 60%)',
+              }}
+            />
 
+            <div className="relative z-10 space-y-6 max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+                Ready to accelerate your business?
+              </h2>
+              <p className="text-white/50 text-lg">
+                Join thousands of MSMEs already scaling smarter with AI-powered insights and expert guidance.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link href="/dashboard">
+                  <Button
+                    size="lg"
+                    className="bg-violet-600 hover:bg-violet-700 text-white border-0 px-8 h-12 text-base cursor-pointer gap-2 shadow-lg shadow-violet-900/40"
+                  >
+                    Start for Free
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+                <a href="https://pxconsulting.in/contact-pxc/" target="_blank" rel="noopener noreferrer">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white/15 text-white/80 hover:bg-white/[0.06] hover:text-white px-8 h-12 text-base cursor-pointer"
+                    style={{ background: 'rgba(255,255,255,0.04)' }}
+                  >
+                    Book a Consultation
+                  </Button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

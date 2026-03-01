@@ -1,10 +1,23 @@
-import { SignUp } from '@clerk/nextjs'
-import React from 'react'
+'use client';
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { createClient } from '@/lib/supabase/client';
 
-const Page = () => {
+export default function SignUpPage() {
+  const supabase = createClient();
   return (
-    <div><SignUp /></div>
-  )
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-md p-8 rounded-2xl border border-white/10 bg-[#111118]">
+        <h1 className="text-2xl font-semibold text-white mb-6 text-center">Create your account</h1>
+        <Auth
+          supabaseClient={supabase}
+          appearance={{ theme: ThemeSupa }}
+          view="sign_up"
+          providers={['google']}
+          redirectTo={typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : '/auth/callback'}
+          showLinks={true}
+        />
+      </div>
+    </div>
+  );
 }
-
-export default Page

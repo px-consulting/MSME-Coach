@@ -1,26 +1,21 @@
 "use server";
 
 import { db } from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
+import { createClient } from "@/lib/supabase/server";
 
 
 export async function createBusinessInsight(data) {
-    const { userId } = await auth();
-    if (!userId) {
-        throw new Error("Unauthorized");
-    }
-    const user = await db.user.findUnique({
-        where: {
-            clerkUserId: userId
-        }
-    });
-    if (!user) {
-        throw new Error('User not found!');
-    }
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+
+    const dbUser = await db.user.findUnique({ where: { authUserId: user.id } });
+    if (!dbUser) throw new Error('User not found!');
+
     try {
         const businessInsight = await db.businessInsight.create({
             data: {
-                userId: user.id,
+                userId: dbUser.id,
                 businessName: data.businessName,
                 industry: data.industry,
                 subSegment: data.subSegment,
@@ -41,31 +36,18 @@ export async function createBusinessInsight(data) {
 }
 
 export async function getUserOnboardingStatus() {
-    const { userId } = await auth();
-    if (!userId) {
-        throw new Error("Unauthorized");
-    }
-    const user = await db.user.findUnique({
-        where: {
-            clerkUserId: userId
-        }
-    });
-    if (!user) {
-        throw new Error('User not found!');
-    }
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
 
     try {
-        const user = await db.user.findUnique({
-            where: {
-                clerkUserId: userId,
-            },
-            select: {
-                businessInsight: true
-            }
+        const dbUser = await db.user.findUnique({
+            where: { authUserId: user.id },
+            select: { businessInsight: true }
         });
         return {
-            isOnboarded: !!user?.businessInsight
-        }
+            isOnboarded: !!dbUser?.businessInsight
+        };
     } catch (error) {
         console.error("Error checking onboarding status: ", error);
         throw new Error("Failed to check onboarding status");

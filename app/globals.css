@@ -123,28 +123,81 @@
 
 @layer utilities {
   .gradient {
-    @apply bg-gradient-to-br from-blue-600 to-purple-600;
+    @apply bg-gradient-to-br from-violet-600 to-blue-600;
   }
 
   .gradient-title {
-    @apply bg-gradient-to-br from-blue-600 to-purple-600 font-extrabold tracking-tighter pr-2 pb-2 text-transparent bg-clip-text;
+    @apply bg-gradient-to-br from-violet-400 to-blue-400 font-extrabold tracking-tighter pr-2 pb-2 text-transparent bg-clip-text;
   }
 
   .highlight-performance {
-    @apply bg-gradient-to-r from-sky-400 via-blue-500 via-purple-500 to-pink-400 text-transparent bg-clip-text font-extrabold;
+    @apply bg-gradient-to-r from-violet-400 via-purple-400 to-blue-400 text-transparent bg-clip-text font-extrabold;
   }
 }
 
+/* Linear-style animated grid background */
+.linear-grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Glow effects */
+.glow-purple {
+  box-shadow: 0 0 80px rgba(139, 92, 246, 0.2), 0 0 160px rgba(139, 92, 246, 0.08);
+}
+
+.glow-card {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.4);
+}
+
+/* Hero image scroll animation */
 .hero-image {
   opacity: 0;
-  transform: translateY(30px) scale(0.95);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(40px) scale(0.96);
+  transition: opacity 1s ease, transform 1s ease;
   will-change: opacity, transform;
 }
 
 .hero-image.scrolled {
   opacity: 1;
   transform: translateY(0px) scale(1);
+}
+
+/* Fade in up animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+/* Gradient border card */
+.gradient-border-card {
+  position: relative;
+  background: #111118;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.gradient-border-card:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: #15151F;
+}
+
+/* Dot grid for hero */
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.25; }
+  50%       { opacity: 0.55; }
+}
+
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(139,92,246,0.35) 1px, transparent 1px);
+  background-size: 28px 28px;
+  animation: dotPulse 4s ease-in-out infinite;
 }
 
 
