@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import { Toaster } from "sonner";
 import Image from "next/image";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,9 +42,9 @@ export default function RootLayout({ children }) {
 
               {/* Links */}
               <div className="flex items-center gap-6 text-sm text-white/40">
-                <a href="/" className="hover:text-white/70 transition-colors">Privacy</a>
-                <a href="/" className="hover:text-white/70 transition-colors">Terms</a>
-                <a href="/" className="hover:text-white/70 transition-colors">Contact</a>
+                <Link href="/" className="hover:text-white/70 transition-colors">Privacy</Link>
+                <Link href="/" className="hover:text-white/70 transition-colors">Terms</Link>
+                <Link href="/" className="hover:text-white/70 transition-colors">Contact</Link>
               </div>
 
               {/* Copyright */}
